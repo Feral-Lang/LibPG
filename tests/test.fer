@@ -1,0 +1,23 @@
+let io = import('std/io');
+let os = import('std/os');
+
+let pg = import('pg/pg');
+
+let user = os.getEnv('POSTGRES_USER');
+let pass = os.getEnv('POSTGRES_PASS');
+let server = os.getEnv('POSTGRES_SERVER');
+
+if user == nil {
+    io.println('FATAL: `POSTGRES_SERVER`, `POSTGRES_USER`, and `POSTGRES_PASS` environment variables must be set');
+    feral.exit(1);
+}
+
+io.println(' libpq version: ', pg.getVersion());
+
+let connStr = 'postgres://' + user + ':' + pass + '@' + server + '/feraltestdb?sslmode=require&sslnegotiation=direct';
+let conn = pg.new(connStr).ok();
+
+io.println('server version: ', conn.getVersion());
+io.println('  db: ', conn.getDb());
+io.println('user: ', conn.getUser());
+#io.println('pass: ', conn.getPass());
