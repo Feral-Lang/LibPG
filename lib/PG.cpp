@@ -18,15 +18,13 @@ void VarPGConn::onDestroy(VirtualMachine &vm) { PQfinish(val); }
 FERAL_FUNC(pqGetVersionNative, 0, false,
            "  fn() -> Int\n"
            "Fetch the version of the PQ library.")
-{
-    return vm.makeVar<VarInt>(loc, PQlibVersion());
-}
+{ return vm.makeVar<VarInt>(loc, PQlibVersion()); }
 
 FERAL_FUNC(pqConnectDb, 1, false,
            "  fn(connStr) -> Result<PQConnection>\n"
            "Connect to the Postgres server using the connection string `connStr`.")
 {
-    const char *connStr = as<VarStr>(args[1])->getVal().c_str();
+    const char *connStr = as<VarStr>(args[1])->cStr();
     PGconn *c           = PQconnectdb(connStr);
     if(PQstatus(c) != CONNECTION_OK) {
         VarError *e = vm.makeVar<VarError>(loc, PQstatus(c), PQerrorMessage(c));

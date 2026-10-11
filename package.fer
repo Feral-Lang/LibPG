@@ -5,8 +5,8 @@ let configure = fn(info) {
     let pkg = package.new(
         'PG',
         desc = 'Postgresql interface for Feral, using libpq.',
-        version = '0.0.1',
-        feral = '>=2.4.2',
+        version = '0.0.2',
+        feral = '>=2.6.0',
         author = vec.new('Chirag-Khandelwal <github@mail.chiragkh.me>')
     );
 
